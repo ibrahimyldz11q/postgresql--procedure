@@ -1,0 +1,21 @@
+CREATE OR REPLACE PROCEDURE collect_query_statistics() AS $$
+DECLARE
+    query_stats record;
+BEGIN
+    -- Sorgu istatistiklerini al
+    FOR query_stats IN (SELECT * FROM pg_stat_statements)
+    LOOP
+        -- İstatistikleri kullanarak istediğiniz işlemleri gerçekleştirin
+        -- Örneğin, sorgu, çalışma süresi, çağrı sayısı vb. üzerinde analiz yapabilirsiniz
+        RAISE NOTICE 'Query: %', query_stats.query;
+        RAISE NOTICE 'Total Calls: %', query_stats.calls;
+        RAISE NOTICE 'Total Exec Time: % ms', query_stats.total_exec_time;
+        RAISE NOTICE 'Rows: %', query_stats.rows;
+
+        -- Burada istediğiniz başka işlemleri de gerçekleştirebilirsiniz
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
